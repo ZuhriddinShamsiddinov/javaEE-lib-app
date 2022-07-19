@@ -17,7 +17,42 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<form class="form-inline">
+    <input class="form-control mr-sm-2" name="search" type="search" value="${search}" placeholder="Search"
+           aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
 <div class="m-4">
+    <%--For displaying Previous link except for the 1st page --%>
+    <table border="1" cellpadding="5" cellspacing="5">
+        <tr>
+            <c:forEach begin="1" end="${noOfPages+1}" var="i">
+                <c:choose>
+                    <c:when test="${currentPage eq i}">
+                        <td>${i}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><a btn btn-primary href="?page=${i}">${i}</a></td>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+        </tr>
+    </table>
+    <br>
+    <c:if test="${currentPage != 1}">
+        <td><a class="btn btn-primary" href="page=${currentPage - 1}&search=${search}">Previous</a></td>
+    </c:if>
+    <c:if test="${currentPage lt noOfPages+1}">
+        <td><a class="btn btn-success" href="?page=${currentPage + 1}&search=${search}">Next</a></td>
+    </c:if>
+    <br>
+    <br>
     <button id="add-button" type="button" class="btn btn-success mb-4 text-white"
             data-toggle="modal"
             data-target="#exampleModal">
@@ -132,6 +167,7 @@
     </c:forEach>
 </div>
 
+<a class="btn btn-danger" href="/logout">Logout</a>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

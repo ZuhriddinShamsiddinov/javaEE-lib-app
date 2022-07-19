@@ -48,8 +48,8 @@ public class BookService {
         return bookDAO.findAllStatusPinned();
     }
 
-    public List<Book> getAllForAdmin() {
-        return bookDAO.findAll();
+    public List<Book> getAllForAdmin(int i, int recordsPerPage, String search) {
+        return bookDAO.findAll(i, recordsPerPage, search);
     }
 
     public void deleteBook(String name) {

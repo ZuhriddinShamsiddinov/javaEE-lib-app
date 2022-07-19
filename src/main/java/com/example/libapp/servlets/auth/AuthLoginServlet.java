@@ -23,6 +23,10 @@ public class AuthLoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getSession().getAttribute("auth_session") != null) {
+            resp.sendRedirect("/logout");
+            return;
+        }
         RequestDispatcher dispatcher = req.getRequestDispatcher("views/auth/login.jsp");
         dispatcher.forward(req, resp);
     }
@@ -36,7 +40,6 @@ public class AuthLoginServlet extends HttpServlet {
         if (Objects.isNull(user) || !PasswordEncoder.match(password, user.getPassword())) {
             throw new AuthenticationException("Bad Credentials");
         }
-
         HttpSession session = req.getSession();
         session.setAttribute("auth_session", user);
         resp.sendRedirect("/");

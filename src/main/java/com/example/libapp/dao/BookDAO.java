@@ -59,28 +59,35 @@ public class BookDAO implements Dao {
         SessionFactory sessionFactory = HibernateConfigurer.getSessionFactory();
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.getTransaction().begin();
-        List<Book> bookList = currentSession.createQuery("select t from Book t where t.status='PINNED'", Book.class).list();
+        List<Book> bookList = currentSession.createQuery("select t from Book t where t.status='PINNED' ", Book.class)
+                .list();
         currentSession.getTransaction().commit();
         currentSession.close();
         return bookList;
     }
 
-    public List<Book> findAll() {
+    public List<Book> findAll(int i, int recordsPerPage, String search) {
         SessionFactory sessionFactory = HibernateConfigurer.getSessionFactory();
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.getTransaction().begin();
-        List<Book> bookList = currentSession.createQuery("select t from Book t ", Book.class).list();
+
+        Query<Book> query = currentSession.createQuery("select t from Book t where " +
+                "lower(t.name) like lower(:search) or lower(t.author) like lower(:search) or lower(t.description) like lower(:search)", Book.class).setParameter("search", "%" + search + "%");
+        query.setFirstResult(i);
+        query.setMaxResults(recordsPerPage);
+        List<Book> books = query.getResultList();
         currentSession.getTransaction().commit();
         currentSession.close();
-        return bookList;
+        return books;
     }
 
 
-    public List<Book> viewAllBooks(int i, int recordsPerPage) {
+    public List<Book> viewAllBooks(int i, int recordsPerPage, String search) {
         SessionFactory sessionFactory = HibernateConfigurer.getSessionFactory();
         Session currentSession = sessionFactory.getCurrentSession();
         currentSession.getTransaction().begin();
-        Query<Book> query = currentSession.createQuery("select t from Book t ", Book.class);
+        Query<Book> query = currentSession.createQuery("select t from Book t where t.status='PINNED' and " +
+                "lower(t.name) like lower(:search) or lower(t.author) like lower(:search) or lower(t.description) like lower(:search)", Book.class).setParameter("search", "%" + search + "%");
         query.setFirstResult(i);
         query.setMaxResults(recordsPerPage);
         List<Book> books = query.getResultList();

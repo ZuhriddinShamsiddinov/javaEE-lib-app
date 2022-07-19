@@ -18,7 +18,9 @@
 <body>
 <div class="row">
     <div class="col-6 offset-3">
-        <h2>Are you sure log out</h2>
+        <h1>You are current session</h1>
+        <h2>You must be logged out</h2>
+        <h3>Are you sure log out</h3>
         <form method="post">
             <button type="submit" class="btn btn-danger">Yes</button>
             <a href="/" class="btn btn-info">Back</a>
