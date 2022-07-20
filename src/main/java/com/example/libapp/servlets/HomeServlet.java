@@ -21,7 +21,6 @@ import java.util.Objects;
 @WebServlet(value = "/")
 public class HomeServlet extends HttpServlet {
     private final BookDAO bookDAO = ApplicationContextHolder.getBean(BookDAO.class);
-    private final BookService bookService = ApplicationContextHolder.getBean(BookService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,7 +45,6 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("currentPage", page);
             req.setAttribute("username", req.getSession().getAttribute("auth_session"));
             req.setAttribute("search", search);
-//            req.setAttribute("books", bookService.getAllForUsers());
             req.setAttribute("genres", Book.Genre.values());
             req.setAttribute("languages", Language.values());
             RequestDispatcher dispatcher = req.getRequestDispatcher("views/main.jsp");
@@ -69,7 +67,6 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("noOfPages", (list.size() / recordsPerPage));
             req.setAttribute("currentPage", page);
             req.setAttribute("username", req.getSession().getAttribute("auth_session"));
-//            req.setAttribute("books", bookService.getAllForAdmin());
             req.setAttribute("genres", Book.Genre.values());
             req.setAttribute("languages", Language.values());
             RequestDispatcher dispatcher = req.getRequestDispatcher("views/auth/admin.jsp");
