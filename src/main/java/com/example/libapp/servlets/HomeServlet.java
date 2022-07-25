@@ -32,7 +32,7 @@ public class HomeServlet extends HttpServlet {
                 search = "";
             }
             int page = 1;
-            int recordsPerPage = 5;
+            int recordsPerPage = 6;
             if (req.getParameter("page") != null)
                 page = Integer.parseInt(
                         req.getParameter("page"));
@@ -55,7 +55,7 @@ public class HomeServlet extends HttpServlet {
                 search = "";
             }
             int page = 1;
-            int recordsPerPage = 5;
+            int recordsPerPage = 6;
             if (req.getParameter("page") != null)
                 page = Integer.parseInt(
                         req.getParameter("page"));
@@ -68,6 +68,7 @@ public class HomeServlet extends HttpServlet {
             req.setAttribute("currentPage", page);
             req.setAttribute("username", req.getSession().getAttribute("auth_session"));
             req.setAttribute("genres", Book.Genre.values());
+            req.setAttribute("search", search);
             req.setAttribute("languages", Language.values());
             RequestDispatcher dispatcher = req.getRequestDispatcher("views/auth/admin.jsp");
             dispatcher.forward(req, resp);

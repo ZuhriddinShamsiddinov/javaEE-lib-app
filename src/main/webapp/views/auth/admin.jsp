@@ -88,6 +88,6 @@
         </div>
     </c:forEach>
 </div>
-<a class="btn btn-danger" href="/logout">Logout</a>
+<a class="btn btn-danger m-4" href="/logout">Logout</a>
 </body>
 </html>
